@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #003f5c;
+        }
+
+        .navbar-nav .nav-link {
+            color: white;
+        }
+
+        .navbar-brand {
+            color: white;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .donation-card {
+            background-color: #ffffff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .donation-card h4 {
+            color: #003f5c;
+        }
+
+        .donation-card p {
+            color: #333;
+        }
+
+        .amount-selector {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .amount-selector input {
+            width: 100px;
+            padding: 5px;
+            margin-left: 10px;
+        }
+
+        .donation-button {
+            margin-top: 30px;
+            padding: 12px 25px;
+            background-color: #003f5c;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .donation-button:hover {
+            background-color: #004f6d;
+        }
+
+        .footer {
+            background-color: #003f5c;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark p-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">Blood Bank Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/profile/">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/requests/">Request for Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/blood_request/">Blood Request List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/blood_donor/">Donate Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/donate_us/">Donate Us</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/logout/">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="donation-card">
+                    <h4>Make a Donation to Help Save Lives</h4>
+                    <p>Your contribution helps us maintain and support the blood bank system. Please enter the amount
+                        you wish to donate below.</p>
+
+                    <!-- Input for Other Amount -->
+                    <div class="amount-selector">
+                        <label for="custom-amount">Enter Amount:</label>
+                        <input type="number" id="custom-amount" placeholder="Enter custom amount" min="1">
+                        <input type="hidden" id="total_price">
+                    </div>
+
+                    <!-- Donate Button -->
+                    <button class="donation-button" id="rzp-button1">Donate Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Blood Bank Management System. All Rights Reserved.</p>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        // Payment handling
+        document.getElementById('rzp-button1').onclick = function (e) {
+            // Get the selected amount from the input field (custom-amount)
+            let selectedAmount = document.getElementById('custom-amount').value;
+
+            // Ensure the amount is valid
+            if (selectedAmount <= 0) {
+                alert("Please enter a valid donation amount.");
+                return;
+            }
+
+            // Set the total_price hidden field value to the entered amount (in INR)
+            document.getElementById('total_price').value = selectedAmount;
+
+            // Get the payment amount from the hidden field
+            let payment = parseFloat(document.getElementById('total_price').value);
+
+            // Ensure that payment is valid and not NaN
+            if (isNaN(payment) || payment <= 0) {
+                alert("Invalid payment amount.");
+                return;
+            }
+
+            // Log the amount to be paid in INR (no conversion needed)
+            console.log("Amount to be paid: ", payment);
+
+            var options = {
+                "key": "rzp_test_dXtzOAbVqzRQgs", // Razorpay Key ID
+                "amount": payment * 100,  // Amount in paise (multiply by 100)
+                "currency": "INR",
+                "description": "Donation for Blood Bank Management",
+                "image": "https://example.com/logo.jpg", // Your logo
+                "prefill": {
+                    "name": "{{ request.user.first_name }}",  // Use logged-in user's name
+                    "email": "{{ request.user.email }}",  // Use logged-in user's email
+                },
+                "handler": function (response) {
+                    // Redirect to the success URL with correct amount
+                    window.location.href = `/donation_success/${payment}/${response.razorpay_payment_id}/`;
+                },
+                "modal": {
+                    "ondismiss": function () {
+                        console.log("Checkout form closed by the user");
+                    }
+                }
+            };
+
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

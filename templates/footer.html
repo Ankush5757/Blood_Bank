@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<style>
+    /* Footer Section */
+    .footer_section {
+        background-color: #003f5c; /* Matches the header's dark blue */
+        color: #f8f9fa;
+        padding: 1.5rem 0;
+        font-size: 0.9rem; /* Slightly larger font for readability */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent font family */
+    }
+
+    .footer_section h5 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .footer_section p,
+    .footer_section a {
+        color: #adb5bd;
+        text-decoration: none;
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer_section a:hover {
+        color: #ffc107; /* Highlight color */
+        text-decoration: underline;
+    }
+
+    .footer_social a {
+        font-size: 1.2rem; /* Slightly larger social media icons */
+        margin: 0 0.5rem;
+        color: #f8f9fa;
+    }
+
+    .footer_social a:hover {
+        color: #ffc107; /* Hover effect for icons */
+    }
+
+    .footer-info {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 1rem;
+    }
+
+    /* Follow Us Section Styling */
+    .footer-follow {
+        margin-top: 2rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .footer_section .col-md-4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-follow a {
+            font-size: 1rem; /* Adjust social icon size for smaller screens */
+        }
+    }
+</style>
+<body>
+    <footer class="footer_section">
+        <div class="container">
+            <div class="row text-center text-md-start">
+                <!-- Contact Section -->
+                <div class="col-md-4" id="contactus">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Fc-Road, Pune, Maharashtra</p>
+                    <p><i class="fas fa-phone-alt me-2"></i> +91 7030644959</p>
+                    <p><i class="fas fa-envelope me-2"></i> bloodsupport@gmail.com</p>
+                </div>
+
+                <!-- About Section -->
+                <div class="col-md-4">
+                    <h5>About Us</h5>
+                    <p>
+                        We are committed to saving lives by connecting donors and recipients seamlessly.
+                        Join us in our mission to make blood donation accessible and impactful.
+                    </p>
+                </div>
+
+                <!-- Quick Links Section -->
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="/login/">Donate Us</a></li>
+                        <li><a href="/register/">Signup</a></li>
+                        <li><a href="/login/">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Social Media Links Section -->
+            <div class="footer-follow text-center">
+                <h5>Follow Us On</h5>
+                <a href="#" class="footer_social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="footer_social"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="footer_social"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="footer_social"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <!-- Footer Info -->
+            <div class="text-center footer-info">
+                <p>&copy; <span id="displayYear"></span> Blood Bank Management System. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+    <script>
+        // Display current year in the footer
+        document.getElementById("displayYear").innerText = new Date().getFullYear();
+    </script>
+</body>
+</html>

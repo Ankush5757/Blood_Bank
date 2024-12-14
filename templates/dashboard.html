@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #003f5c;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #f8f9fa !important;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 12px;
+        }
+
+        .card-body {
+            font-size: 1rem;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #003f5c;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            background-color: #003f5c;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #004f6d;
+        }
+
+        .filter-section {
+            background-color: #003f5c;
+            color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-section h3,
+        .filter-section h5 {
+            color: #f8f9fa;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .filter-section button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            background-color: white ;
+            color: #003f5c;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .filter-section button:hover {
+            background-color: #004f6d;
+        }
+
+
+        .form-control {
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-img-top {
+            object-fit: cover;
+            height: 250px;
+            width: 100%;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .donor-card-wrapper {
+            margin-bottom: 30px;
+        }
+
+        .row {
+            margin-bottom: 20px;
+        }
+
+        .empty-message {
+            color: #ff6347;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .donor-info {
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .donor-info p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .donor-info strong {
+            font-weight: 600;
+            color: #003f5c;
+        }
+
+        /* Header Section */
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h1 {
+            font-size: 2.5rem;
+            color: #003f5c;
+            font-weight: bold;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark p-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard/">Blood Bank Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/requests/">Request for Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blood_request/">Blood Request List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blood_donor/">Donate Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/donate_us/">Donate Us</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="section-header">
+            <h1>Available Blood Donors</h1>
+        </div>
+
+        <div class="row">
+            <!-- Filter Sidebar -->
+            <div class="col-md-3">
+                <div class="filter-section shadow-lg">
+                    <h3>Filter Donors</h3>
+                    <hr>
+
+                    <form action="/filter_donors/" method="post">
+                        {% csrf_token %}
+                        <h5>Blood Group</h5>
+                        <select class="form-control" name="blood_group">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="B+">B+</option>
+                            <option value="AB+">AB+</option>
+                            <option value="O+">O+</option>
+                            <option value="A-">A-</option>
+                            <option value="B-">B-</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O-">O-</option>
+                        </select>
+
+                        <h5 class="mt-3">City</h5>
+                        <input type="text" class="form-control" name="city" placeholder="City">
+
+                        <h5 class="mt-3">State</h5>
+                        <input type="text" class="form-control" name="state" placeholder="State"> 
+
+                        <button class="btn btn-primary mt-4" type="submit">Filter</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Donor Cards -->
+            <div class="col-md-9">
+                <div class="row">
+                    {% for item in donors %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-lg border-secondary">
+                            <img src="{{ item.image.url }}" alt="Donor Image" class="card-img-top">
+                            <div class="donor-info">
+                                <h5 class="card-title">{{ item.donor_name }}</h5>
+                                <p><strong>Gender:</strong> {{ item.gender }}</p>
+                                <p><strong>Blood Group:</strong> {{ item.blood_group }}</p>
+                                <p><strong>City:</strong> {{ item.city }}</p>
+                                <p><strong>State:</strong> {{ item.state }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="empty-message">No donors found.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

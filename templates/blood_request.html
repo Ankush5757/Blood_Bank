@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Request List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        background-color: #003f5c;
+    }
+
+    .navbar-brand,
+    .nav-link {
+        color: white !important;
+    }
+
+    .navbar-brand:hover,
+    .nav-link:hover {
+        color: #f8f9fa !important;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .card {
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    .card-body {
+        font-size: 1rem;
+    }
+
+    .card-title {
+        font-weight: bold;
+        color: #003f5c;
+    }
+
+    .btn-primary {
+        background-color: #003f5c;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #004f6d;
+    }
+
+    .filter-section {
+        background-color: #003f5c;
+        color: white;
+        border-radius: 8px;
+        padding: 25px;
+        margin-top: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-section h3,
+    .filter-section h5 {
+        color: #f8f9fa;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .card-img-top {
+        object-fit: cover;
+        height: 250px;
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .donor-card-wrapper {
+        margin-bottom: 30px;
+    }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+    .empty-message {
+        color: #ff6347;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .table {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .table th,
+    .table td {
+        color: #003f5c;
+        text-align: center;
+    }
+
+    .table th {
+        background-color: #003f5c;
+        color: white;
+    }
+
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark p-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard/">Blood Bank Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/requests/">Request for Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blood_request/">Blood Request List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blood_donor/">Donate Blood</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/donate_us/">Donate Us</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Blood Request List</h2>
+
+        <!-- Bootstrap Table -->
+        <div class="card p-3">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Serial No.</th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Blood Group</th>
+                        <th>Urgency</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for donor in user %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ donor.id }}</td>
+                        <td>{{ donor.name }}</td>
+                        <td>{{ donor.mobile }}</td>
+                        <td>{{ donor.email }}</td>
+                        <td>{{ donor.city }}</td>
+                        <td>{{ donor.state }}</td>
+                        <td>{{ donor.blood_group }}</td>
+                        <td>{{ donor.urgency }}</td>
+                        <td><a class="btn btn-success" href="/approve/{{ donor.id }}/">Approve</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="empty-message">No requests found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

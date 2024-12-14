@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .header_section {
+            background-color: #003f5c; /* Dark blue background */
+            padding: 10px 0; /* Adjusted padding */
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff !important; /* White brand text */
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important; /* White text for links */
+            font-weight: 500;
+            margin: 0 10px; /* Adjusted spacing */
+            font-size: 1rem; /* Unified font size */
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffc107 !important; /* Highlight hover color */
+        }
+
+        .dropdown-menu {
+            background-color: #003f5c; /* Dropdown matches navbar background */
+            border: none; /* Removed border */
+        }
+
+        .dropdown-item {
+            color: #ffffff !important; /* White dropdown links */
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #002c41; /* Subtle hover effect */
+        }
+
+        .navbar-toggler {
+            border: 1px solid #ffffff; /* Light border for toggler */
+        }
+
+        @media (max-width: 768px) {
+            .navbar-nav {
+                text-align: center; /* Center-align items on smaller screens */
+            }
+
+            .navbar-nav .nav-link {
+                margin: 5px 0; /* Reduce spacing for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header_section">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <span>BBMS 🩸</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto"> <!-- ml-auto for proper right alignment -->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#aboutus">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contactus">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">Donate to the Blood Bank</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="loginDropdown">
+                            <a class="dropdown-item" href="{% url 'register' %}">Signup</a>
+                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
